@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BiblioTecITTJ — Panel</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="./css/styles.css" rel="stylesheet">
+  <link href="./css/style.css" rel="stylesheet">
+</head>
+<body class="bg-cover">
+<nav class="navbar navbar-expand-lg bg-body-tertiary shadow-sm">
+  <div class="container-fluid">
+    <a class="navbar-brand fw-semibold" href="#"><img src="./img/logo.png" alt="logo"><span id="brandName">BiblioTecITTJ</span></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav" aria-controls="nav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="nav">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link active" data-tab="libros" href="#">Libros</a></li>
+        <li class="nav-item"><a class="nav-link" data-tab="estudiantes" href="#">Estudiantes</a></li>
+        <li class="nav-item"><a class="nav-link" data-tab="prestamos" href="#">Préstamos</a></li>
+        <li class="nav-item"><a class="nav-link" data-tab="multas" href="#">Multas</a></li>
+        <li class="nav-item"><a class="nav-link" data-tab="reportes" href="#">Reportes</a></li>
+      </ul>
+      <div class="d-flex gap-2"><button id="btnSettings" class="btn btn-outline-secondary btn-sm">⚙️</button>
+        <button id="themeToggle" class="btn btn-outline-secondary btn-sm">🌙/☀️</button>
+        <button id="bgToggle" class="btn btn-outline-secondary btn-sm">Fondo</button>
+        <button id="logoutBtn" class="btn btn-danger btn-sm">Salir</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<main class="container py-4">
+  <div id="view-libros" class="view">
+    <div class="d-flex align-items-center justify-content-between mb-3">
+      <h2 class="h5 m-0">Libros</h2>
+      <div class="d-flex gap-2"><button id="btnSettings" class="btn btn-outline-secondary btn-sm">⚙️</button>
+        <input id="qLibros" class="form-control form-control-sm" placeholder="Buscar...">
+        <button id="btnBuscarLibros" class="btn btn-primary btn-sm">Buscar</button>
+        <label class="btn btn-outline-secondary btn-sm mb-0">
+          Importar CSV <input id="csvLibros" data-admin-only hidden type="file" accept=".csv" hidden>
+        </label>
+        <button id="btnNuevoLibro" class="btn btn-success btn-sm" data-admin-only>Nuevo</button>
+      </div>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle">
+        <thead><tr><th>ID</th><th>Título</th><th>Autor</th><th>ISBN</th><th>Año</th><th>Ejemplares</th><th></th></tr></thead>
+        <tbody id="tblLibros"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="view-estudiantes" class="view d-none">
+    <div class="d-flex align-items-center justify-content-between mb-3">
+      <h2 class="h5 m-0">Estudiantes</h2>
+      <div class="d-flex gap-2"><button id="btnSettings" class="btn btn-outline-secondary btn-sm">⚙️</button>
+        <input id="qEst" class="form-control form-control-sm" placeholder="Buscar...">
+        <button id="btnBuscarEst" class="btn btn-primary btn-sm">Buscar</button>
+        <label class="btn btn-outline-secondary btn-sm mb-0">
+          Importar CSV <input id="csvEst" type="file" accept=".csv" hidden>
+        </label>
+        <button id="btnNuevoEst" class="btn btn-success btn-sm" data-admin-only>Nuevo</button>
+      </div>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle">
+        <thead><tr><th>ID</th><th>No. Control</th><th>Nombre</th><th>Correo</th><th>Carrera</th><th></th></tr></thead>
+        <tbody id="tblEst"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="view-prestamos" class="view d-none">
+    <div class="d-flex align-items-center justify-content-between mb-3">
+      <h2 class="h5 m-0">Préstamos</h2>
+      <div class="d-flex gap-2"><button id="btnSettings" class="btn btn-outline-secondary btn-sm">⚙️</button>
+        <button id="btnNuevoPrestamo" class="btn btn-success btn-sm" data-admin-only>Nuevo préstamo</button>
+      </div>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle">
+        <thead><tr><th>ID</th><th>Estudiante</th><th>Libro</th><th>Prestado</th><th>Vence</th><th>Devuelto</th><th>Multa</th><th></th></tr></thead>
+        <tbody id="tblPrestamos"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="view-multas" class="view d-none">
+    <div class="d-flex align-items-center justify-content-between mb-3">
+      <h2 class="h5 m-0">Multas</h2>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle">
+        <thead><tr><th>ID</th><th>Estudiante</th><th>Libro</th><th>Monto</th><th>Estado</th><th>Creada</th><th>Pagada</th><th></th></tr></thead>
+        <tbody id="tblMultas"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="view-reportes" class="view d-none">
+    <div class="d-flex align-items-center justify-content-between mb-3">
+      <h2 class="h5 m-0">Reportes</h2>
+    </div>
+    <div class="vstack gap-2">
+      <a class="btn btn-outline-dark" href="./report.html?type=loans" target="_blank">Ver PDF — Préstamos</a>
+      <a class="btn btn-outline-dark" href="./report.html?type=fines" target="_blank">Ver PDF — Multas</a>
+      <a class="btn btn-outline-dark" href="./report.html?type=inventory" target="_blank">Ver PDF — Inventario</a>
+      <a class="btn btn-outline-primary" href="./api/reports.php?type=loans">Descargar CSV — Préstamos</a>
+      <a class="btn btn-outline-primary" href="./api/reports.php?type=fines">Descargar CSV — Multas</a>
+      <a class="btn btn-outline-primary" href="./api/reports.php?type=inventory">Descargar CSV — Inventario</a>
+    </div>
+  </div>
+
+</main>
+
+<!-- Settings / Branding -->
+<div class="modal fade" id="modalSettings" tabindex="-1"><div class="modal-dialog"><div class="modal-content">
+  <div class="modal-header"><h5 class="modal-title">Preferencias</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+  <div class="modal-body vstack gap-2">
+    <label class="form-label">Nombre de la biblioteca</label>
+    <input id="inpBrand" class="form-control" placeholder="BiblioTecITTJ">
+    <label class="form-label">Color primario</label>
+    <input id="inpColor" type="color" class="form-control form-control-color" value="#0d6efd">
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+    <button id="btnSaveBrand" class="btn btn-primary">Guardar</button>
+  </div>
+</div></div></div>
+
+
+<!-- Modals -->
+<div class="modal fade" id="modalLibro" tabindex="-1"><div class="modal-dialog"><div class="modal-content">
+  <div class="modal-header"><h5 class="modal-title">Libro</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+  <div class="modal-body">
+    <form id="formLibro" class="vstack gap-2">
+      <input type="hidden" name="id">
+      <input class="form-control" name="title" placeholder="Título" required>
+      <input class="form-control" name="author" placeholder="Autor">
+      <input class="form-control" name="isbn" placeholder="ISBN">
+      <input class="form-control" name="year" placeholder="Año" type="number">
+      <input class="form-control" name="copies" placeholder="Ejemplares" type="number" min="1" value="1">
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+    <button id="btnGuardarLibro" class="btn btn-primary">Guardar</button>
+  </div>
+</div></div></div>
+
+<div class="modal fade" id="modalEst" tabindex="-1"><div class="modal-dialog"><div class="modal-content">
+  <div class="modal-header"><h5 class="modal-title">Estudiante</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+  <div class="modal-body">
+    <form id="formEst" class="vstack gap-2">
+      <input type="hidden" name="id">
+      <input class="form-control" name="control_number" placeholder="Número de Control (8 dígitos)" required>
+      <input class="form-control" name="name" placeholder="Nombre" required>
+      <input class="form-control" name="email" placeholder="correo@tlajomulco.tecnm.mx" required>
+      <input class="form-control" name="career" placeholder="Carrera">
+      <div class="form-text">El correo debe terminar en @tlajomulco.tecnm.mx</div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+    <button id="btnGuardarEst" class="btn btn-primary">Guardar</button>
+  </div>
+</div></div></div>
+
+<div class="modal fade" id="modalPrestamo" tabindex="-1"><div class="modal-dialog"><div class="modal-content">
+  <div class="modal-header"><h5 class="modal-title">Nuevo préstamo</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+  <div class="modal-body vstack gap-2">
+    <select id="selEst" class="form-select"></select>
+    <select id="selLibro" class="form-select"></select>
+    <input id="dueDate" type="date" class="form-control">
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+    <button id="btnCrearPrestamo" class="btn btn-primary">Crear</button>
+  </div>
+</div></div></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="./js/api.js"></script>
+<script src="./js/app.js"></script>
+</body>
+</html>
